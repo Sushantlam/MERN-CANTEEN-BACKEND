@@ -1,29 +1,41 @@
 const orderItems = require("../models/orderSchema")
 
 async function createOrder(req,res,next){
+ // const newData = [{ orderDate: req.body.orderDate }, ...data];
+    // // const newData = [{ orderDate: req.body.orderDate }].concat(data); // Create a new array with orderDate added
+    //  const data = req.body.item;
+    //  console.log('Original data:', data);
 
-    const data = req.body.item
-    // console.log('data', data);
-    await data.splice(0,0,{orderDate: req.body.orderDate})
-    
-    const eId= await orderItems.findOne({customer: req.body.customer})
-    console.log('email', eId);
-    if(eId===null)
+    // const newData = [{ orderDate: req.body.orderDate }].concat(data);
+    // console.log('Modified data:', newData);
+
+    let data = req.body.item 
+      console.log('data', data);
+         await data.splice(0,0,{orderDate: req.body.orderDate})
+   
+    const customer = req.body.email
+    console.log(customer);
+    let eId= await orderItems.findOne({email : req.body.email })
+    console.log('Email:', req.body.email);
+    console.log('eId:', eId);
+    if(eId===null){
 //    { const {customer, items}= req.body
 //    console.log(customer, items);
-    try {
-        const order =  await orderItems.create({
-           email: req.body.email,
-           item:[data],
-        })
-        await order.save()
-        console.log('order', order);
-        res.status(201).send({order})}
-    
-    catch (error) {
-        res.status(400).json({error: "Failed to create order"})
-        
-    }
+try {
+    console.log(data)
+    console.log("1231242343242354",req.body.email)
+    await orderItems.create({
+        email: req.body.email,
+        item:[data]
+    }).then(() => {
+        res.json({ success: true })
+    })
+} catch (error) {
+    console.log(error.message)
+    res.json("Server Error", error.message)
+
+}
+}
     else{
         try {
           const newItem=  await orderItems.findOneAndUpdate({email: req.body.email}, {$push: {item: data}})
@@ -48,10 +60,14 @@ async function getAllOrder(req,res){
 async function myOrderData(req,res){
 
      try {
-        console.log(req.body.customer)
-        let myData = await orderItems.findOne({email: req.body.email})
-        console.log("mydata", orderItems);
-   res.status(201).json({orderItems: myData})
+        const email = req.body.email
+        console.log(email);
+        // console.log(req.body.customer)
+        let myData = new orderItems.findOne({email: req.body.email})
+        console.log(myData);
+        await myData.save()
+        // console.log("mydata", orderItems);
+   res.status(201).json({ myData})
   
     } catch (error) {
         res.status(401).send("newItem", error)
