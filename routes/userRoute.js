@@ -1,6 +1,6 @@
 const express = require("express")
-const { userRegister, loginUser } = require("../controllers/auth")
-const { updateUser, getAllUser } = require("../controllers/user")
+const { userRegister, loginUser, verifyEmail } = require("../controllers/auth")
+const { updateUser, getAllUser, countByUser, getUserByCount, deleteUserById } = require("../controllers/user")
 const { verifyToken, verifyUser, verifyAdmin } = require("../utils/verification")
 const router = express.Router()
 
@@ -15,7 +15,10 @@ const router = express.Router()
 
 router.post("/signup", userRegister)
 
+// router.get("/verify", verifyEmail)
+router.delete("/:id",verifyAdmin, deleteUserById)
 router.get("/", verifyAdmin ,getAllUser)
+// router.get("/count",getUserByCount)
 router.post("/login", loginUser)
 router.put("/:id",verifyUser, updateUser)
 

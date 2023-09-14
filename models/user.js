@@ -17,7 +17,13 @@ const userSchema = new mongoose.Schema({
     isAdmin:{
         type: Boolean,
         default: false
-    }
+    },
+    isVerified:{
+        type: Number,
+        required: true,
+    },
+    
+
 }, {timestamps: true})
 
 const user= mongoose.model("users", userSchema)

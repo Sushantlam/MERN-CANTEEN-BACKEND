@@ -10,7 +10,7 @@ const foodItem= new mongoose.Schema({
         required: true,
     },
     photo:{
-        type: [],
+        type: String,
        
     }, quantity:{
         type: Number,
