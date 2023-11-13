@@ -12,8 +12,7 @@ const axios = require("axios")
 const cors= require("cors")
 const port = process.env.PORT || 6000;
 
-const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/canteenmanagementsystem';
-
+const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/canteenmanagementsystem";
 // const fileUpload = require('express-fileupload');
 
 dotenv.config()
