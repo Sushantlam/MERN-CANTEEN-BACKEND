@@ -10,9 +10,9 @@ const dotenv = require("dotenv")
 const cookieParser = require("cookie-parser")
 const axios = require("axios")
 const cors= require("cors")
-const port = process.env.PORT || 6000;
+var port = process.env.PORT || 6000;
 
-const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/canteenmanagementsystem";
+var uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/canteenmanagementsystem";
 // const fileUpload = require('express-fileupload');
 
 dotenv.config()
@@ -76,7 +76,7 @@ app.use("/create-checkout-session", stripe)
 app.get("/",(req,res)=>{
     res.send("Hello from server")
 })
-
+export default app;
 // app.listen(8000,()=>{
 //     console.log(`listening at port ${PORT}`)
 // })
