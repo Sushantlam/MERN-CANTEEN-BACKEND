@@ -29,9 +29,9 @@ const storage = multer.diskStorage({
 
 router.post("/", verifyAdmin, upload.single('image'), createFood)
 router.get("/",getAllFood)
-router.get("/search",getFoodbyKeywords)
-router.get("/filtered",getfilteredData)
-router.get("/category", getByCategory)
+// router.get("/search",getFoodbyKeywords)
+// router.get("/filtered",getfilteredData)
+//  router.get("/category", getByCategory)
 router.put("/:id", verifyAdmin, updateFood)
 router.get("/:id",getByID)
 router.delete("/:id",verifyAdmin, deleteFoodById)

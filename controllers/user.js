@@ -10,6 +10,24 @@ async function updateUser(req, res, next) {
     }
 }
 
+
+
+async function getByCount(req, res, next) {
+
+    try {
+        const countUser = await user.countDocuments({})
+       
+
+        return res.status(201).json([
+          
+            { count: countUser },
+
+        ])
+
+    } catch (error) {
+        res.status(402).json("Bad request")
+    }
+}
 async function deleteUserById(req,res,next){
     try {
         const deleteById = await user.findByIdAndDelete(req.params.id)
@@ -88,4 +106,4 @@ async function getAllUser(req, res, next) {
 //      }
 //  }
 
-module.exports = { updateUser, getAllUser, deleteUserById }
+module.exports = { updateUser, getAllUser, deleteUserById , getByCount}

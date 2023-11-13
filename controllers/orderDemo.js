@@ -1,6 +1,46 @@
 const orderDetails = require("../models/orderDemo")
 const nodemailer = require('nodemailer');
 
+async function sendEmailBeforeOrderStatusChange(name, email, title){
+    try {
+        const transport =nodemailer.createTransport({
+           
+            service: 'gmail',
+            port: 465,
+            logger: true,
+            debug: true,
+            secure: true,
+           auth:{
+                user: 'sushantlama732@gmail.com',
+                pass: 'zpxsjrfthoxuebra'
+     },
+    tls:{
+        rejectUnauthorized:true
+    } })
+           const mailOptions = {
+                from: 'sushantlama732@gmail.com',
+                to: email,
+                subject: 'Order Notification',
+                html: '<h2>Hello '+ name +', </h2> <p> Your order is placed successfully and we will get back to you after the order is ready  </p>'
+     };
+
+     
+     transport.sendMail(mailOptions,  function(error, info){
+        if (error) {
+          console.log(error.message);
+          
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
 async function createOrder(req, res){
     const {email, userName, totalPrice}= req.body
     let data = req.body.item
@@ -17,6 +57,7 @@ async function createOrder(req, res){
         })
 
         await newOrder.save()
+        sendEmailBeforeOrderStatusChange(newOrder.userName,newOrder.email)
         res.status(201).json({message:"order Created successfully" })
         
     } catch (error) {
@@ -55,13 +96,16 @@ async function sendEmail(name, email, title){
     tls:{
         rejectUnauthorized:true
     } })
-            const mailOptions = {
+           const mailOptions = {
                 from: 'sushantlama732@gmail.com',
                 to: email,
-                subject: 'For verification email',
-                html: '<p>Hello '+ name +'  Your order is ready  </p>'
+                subject: 'Order Notification',
+                html: '<h2>Hello ' + name + ',</h2><p>Your order is ready. Please receive it.</p>, <p>Dont forget to give feedback</p>, '
+
      };
-     transport.sendMail(mailOptions, function(error, info){
+
+     
+     transport.sendMail(mailOptions,  function(error, info){
         if (error) {
           console.log(error.message);
           
@@ -98,6 +142,18 @@ async function updateStatus (req,res){
 
 }
 
+async function orderCount (req,res){
+   
+    try {
+        const countOrder = await orderDetails.countDocuments()
+       
+        res.status(201).json(countOrder)
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+
+}
+
 async function getOnlyOneUserDetails(req,res){
     try {
       
@@ -124,4 +180,4 @@ async function getOnlyOneUserDetails(req,res){
     
 // }
 
-module.exports ={createOrder, getAllOrder, updateStatus, getOnlyOneUserDetails}
+module.exports ={createOrder, orderCount, getAllOrder, updateStatus, getOnlyOneUserDetails}

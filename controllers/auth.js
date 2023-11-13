@@ -68,7 +68,7 @@ const newUser = new User({
 async function loginUser(req,res,next){
     try {
         const loginEmail = await User.findOne({email: req.body.email})
-        if(!loginEmail) return res.status(402).send("Your email is wrong or email isnt logged in")
+        if(!loginEmail) return res.status(402).send("Your email is wrong")
 
         const logInPassword= await bcrypt.compare(req.body.password, loginEmail.password)
         if(!logInPassword) res.status(400).send("Your password is wrong")
@@ -76,6 +76,7 @@ async function loginUser(req,res,next){
         //yedi login vayo vaney teslae jwttoken dine jasle garda pachi check garna sajilo huncha 
         const token = jwt.sign({ id : loginEmail._id, isAdmin: loginEmail.isAdmin}, process.env.SECRET)
         const { password, isAdmin, ...otherdetails}= loginEmail._doc
+        // if(!isAdmin) res.status(400).send("Your are not admin")
 
         res.cookie("access_token", token,{
             httpOnly: true,
