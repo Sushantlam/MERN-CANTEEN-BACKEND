@@ -76,7 +76,7 @@ app.use("/create-checkout-session", stripe)
 app.get("/",(req,res)=>{
     res.send("Hello from server")
 })
-export default app;
+
 // app.listen(8000,()=>{
 //     console.log(`listening at port ${PORT}`)
 // })
