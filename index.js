@@ -16,7 +16,13 @@ const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/canteenmanagem
 // const fileUpload = require('express-fileupload');
 
 dotenv.config()
-app.use(cors())
+const corsConfig = {
+  origin: '',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}
+app.use(cors(corsConfig))
+app.options("", cors(corsConfig))
 app.use(express.json({ limit: '100mb' }))
 app.use(cookieParser())
 app.use('/images', express.static('views'));
