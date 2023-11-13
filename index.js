@@ -10,6 +10,8 @@ const dotenv = require("dotenv")
 const cookieParser = require("cookie-parser")
 const axios = require("axios")
 const cors= require("cors")
+const port = process.env.PORT || 6000;
+
 // const fileUpload = require('express-fileupload');
 
 dotenv.config()
@@ -23,9 +25,9 @@ app.use('/images', express.static('views'));
 
 connectMongoDb(process.env.URI).then(()=>{
     console.log('MongoDb connected')
-    app.listen(process.env.PORT , (err)=>{
+    app.listen(port , (err)=>{
         if (err) console.log(err)
-        console.log("Sucessfully running at ", process.env.PORT)
+        console.log("Sucessfully running at ", port)
     })
 }).catch((error)=>{
     console.log(error)
