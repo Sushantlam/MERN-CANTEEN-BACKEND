@@ -12,7 +12,7 @@ const axios = require("axios")
 const cors= require("cors")
 var port = process.env.PORT || 6000;
 
-var uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/canteenmanagementsystem";
+ process.env.URI 
 // const fileUpload = require('express-fileupload');
 
 dotenv.config()
@@ -30,7 +30,7 @@ app.use('/images', express.static('views'));
 
 
 
-connectMongoDb(uri).then(()=>{
+connectMongoDb(process.env.URI).then(()=>{
     console.log('MongoDb connected')
     app.listen(port , (err)=>{
         if (err) console.log(err)
