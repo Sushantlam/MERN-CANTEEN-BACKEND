@@ -16,13 +16,13 @@ var port = process.env.PORT || 6000;
 // const fileUpload = require('express-fileupload');
 
 dotenv.config()
-const corsConfig = {
-  origin: '',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
-}
-app.use(cors(corsConfig))
-app.options("", cors(corsConfig))
+// const corsConfig = {
+//   origin: '',
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE']
+// }
+app.use(cors())
+// app.options("", cors(corsConfig))
 app.use(express.json({ limit: '100mb' }))
 app.use(cookieParser())
 app.use('/images', express.static('views'));
