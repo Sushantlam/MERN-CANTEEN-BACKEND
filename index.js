@@ -12,9 +12,14 @@ const axios = require("axios")
 const cors= require("cors")
 var port = process.env.PORT || 6000;
 
- process.env.URI 
+//  process.env.URI 
 // const fileUpload = require('express-fileupload');
 
+app.use(express.static(__dirname));
+
+app.get("/*", function(req, res) {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 dotenv.config()
 const corsConfig = {
   origin: '',
