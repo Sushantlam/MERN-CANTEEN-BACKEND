@@ -21,6 +21,7 @@ async function createFood(req, res, next) {
     featured: req.body.featured || false,
     photo: req.file.filename
   });
+  console.log('No file uploaded',newFoodItem);
 
   try {
     const newItem = await newFoodItem.save();
